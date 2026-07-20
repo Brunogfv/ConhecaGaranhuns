@@ -329,13 +329,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginVertical: 12
+    marginVertical: 8,
+    gap: 6
   },
 
   resultText: {
     color: '#5a6e63',
     fontSize: 13,
-    fontWeight: '500'
+    fontWeight: '500',
+    flexShrink: 1
   },
 
   toggleButton: {
@@ -356,11 +358,13 @@ const styles = StyleSheet.create({
   },
 
   categoryRow: {
-    maxHeight: 38,
-    marginBottom: 4
+    height: 40,
+    flexGrow: 0,
+    marginBottom: 8
   },
 
   categoryContent: {
+    alignItems: 'center',
     gap: 8
   },
 
