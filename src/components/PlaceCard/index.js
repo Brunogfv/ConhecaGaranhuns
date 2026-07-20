@@ -4,10 +4,11 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
 
-export default function PlaceCard({ place, onPress }) {
+export default function PlaceCard({ place, onPress, isFavorite, onToggleFavorite }) {
   return (
     <Pressable
       style={({ pressed }) => [
@@ -21,6 +22,15 @@ export default function PlaceCard({ place, onPress }) {
         style={styles.image}
         resizeMode="cover"
       />
+
+      <TouchableOpacity
+        style={styles.favoriteButton}
+        onPress={() => onToggleFavorite?.(place.id)}
+      >
+        <Text style={styles.favoriteIcon}>
+          {isFavorite ? '❤️' : '🤍'}
+        </Text>
+      </TouchableOpacity>
 
       <View style={styles.content}>
         <View style={styles.categoryContainer}>
@@ -78,6 +88,22 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     backgroundColor: '#d9d9d9'
+  },
+
+  favoriteButton: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    backgroundColor: 'rgba(255,255,255,0.85)',
+    borderRadius: 22,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  favoriteIcon: {
+    fontSize: 20
   },
 
   content: {

@@ -1,17 +1,33 @@
 import React from 'react';
+import { Share } from 'react-native';
 
 import {
   Image,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
 
 import MapViewWrapper from '../../components/MapViewWrapper';
+import useFavorites from '../../hooks/useFavorites';
 
 export default function Details({ route }) {
   const { place } = route.params;
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const fav = isFavorite(place.id);
+
+  async function handleShare() {
+    try {
+      await Share.share({
+        message: `Conheça ${place.name} em Garanhuns!\n\n${place.summary}\n\n📍 ${place.address}\n🎟️ ${place.admission}\n\n📍 Abrir no mapa: https://www.google.com/maps/search/?api=1&query=${place.coordinate.latitude},${place.coordinate.longitude}`,
+        title: place.name
+      });
+    } catch (error) {
+      console.error('Erro ao compartilhar:', error);
+    }
+  }
 
   return (
     <ScrollView
@@ -24,6 +40,24 @@ export default function Details({ route }) {
         style={styles.image}
         resizeMode="cover"
       />
+
+      <View style={styles.imageActions}>
+        <TouchableOpacity
+          style={styles.imageActionButton}
+          onPress={() => toggleFavorite(place.id)}
+        >
+          <Text style={styles.imageActionIcon}>
+            {fav ? '❤️' : '🤍'}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.imageActionButton}
+          onPress={handleShare}
+        >
+          <Text style={styles.imageActionIcon}>📤</Text>
+        </TouchableOpacity>
+      </View>
 
       {place.coordinate && (
         <MapViewWrapper
@@ -123,6 +157,27 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 270,
     backgroundColor: '#d9d9d9'
+  },
+
+  imageActions: {
+    flexDirection: 'row',
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    gap: 8
+  },
+
+  imageActionButton: {
+    backgroundColor: 'rgba(255,255,255,0.85)',
+    borderRadius: 22,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  imageActionIcon: {
+    fontSize: 20
   },
 
   map: {

@@ -18,6 +18,7 @@ import {
 import MapViewWrapper from '../../components/MapViewWrapper';
 import PlaceCard from '../../components/PlaceCard';
 import placesData from '../../data/places';
+import useFavorites from '../../hooks/useFavorites';
 
 export default function Home({ navigation }) {
   const [places, setPlaces] = useState([]);
@@ -25,6 +26,8 @@ export default function Home({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const [showMap, setShowMap] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const { favoriteIds, isFavorite, toggleFavorite } = useFavorites();
 
   const categories = useMemo(() => {
     const unique = [...new Set(placesData.map((p) => p.category))];
@@ -68,6 +71,10 @@ export default function Home({ navigation }) {
       );
     }
 
+    if (showFavoritesOnly) {
+      result = result.filter((place) => favoriteIds.includes(place.id));
+    }
+
     if (normalizedSearch !== '') {
       result = result.filter((place) => {
         const name = place.name.toLowerCase();
@@ -83,7 +90,7 @@ export default function Home({ navigation }) {
     }
 
     return result;
-  }, [places, searchText, selectedCategory]);
+  }, [places, searchText, selectedCategory, showFavoritesOnly, favoriteIds]);
 
   function openDetails(place) {
     navigation.navigate('Details', {
@@ -96,6 +103,8 @@ export default function Home({ navigation }) {
       <PlaceCard
         place={item}
         onPress={() => openDetails(item)}
+        isFavorite={isFavorite(item.id)}
+        onToggleFavorite={toggleFavorite}
       />
     );
   }
@@ -217,6 +226,18 @@ export default function Home({ navigation }) {
         </Text>
 
         <TouchableOpacity
+          style={[
+            styles.toggleButton,
+            showFavoritesOnly && styles.toggleButtonActive
+          ]}
+          onPress={() => setShowFavoritesOnly((prev) => !prev)}
+        >
+          <Text style={styles.toggleButtonText}>
+            {showFavoritesOnly ? '❤️ Favoritos' : '🤍 Favoritos'}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
           style={styles.toggleButton}
           onPress={() => setShowMap((prev) => !prev)}
         >
@@ -322,6 +343,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 14,
     paddingVertical: 6
+  },
+
+  toggleButtonActive: {
+    backgroundColor: '#c0392b'
   },
 
   toggleButtonText: {
