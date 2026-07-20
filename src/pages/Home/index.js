@@ -1,5 +1,4 @@
 import React, {
-  useCallback,
   useEffect,
   useMemo,
   useState
@@ -14,8 +13,8 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import MapView, { Marker, Callout } from 'react-native-maps';
 
+import MapViewWrapper from '../../components/MapViewWrapper';
 import PlaceCard from '../../components/PlaceCard';
 import placesData from '../../data/places';
 
@@ -163,32 +162,17 @@ export default function Home({ navigation }) {
       </View>
 
       {showMap ? (
-        <MapView
-          style={styles.map}
-          initialRegion={{
+        <MapViewWrapper
+          places={filteredPlaces}
+          region={{
             latitude: -8.885,
             longitude: -36.492,
             latitudeDelta: 0.04,
             longitudeDelta: 0.04
           }}
-        >
-          {filteredPlaces.map((place) => (
-            <Marker
-              key={place.id}
-              coordinate={place.coordinate}
-              title={place.name}
-              description={place.category}
-              onCalloutPress={() => navigation.navigate('Details', { place })}
-            >
-              <Callout>
-                <View style={styles.callout}>
-                  <Text style={styles.calloutTitle}>{place.name}</Text>
-                  <Text style={styles.calloutCategory}>{place.category}</Text>
-                </View>
-              </Callout>
-            </Marker>
-          ))}
-        </MapView>
+          onPlacePress={(place) => navigation.navigate('Details', { place })}
+          style={styles.map}
+        />
       ) : (
         <FlatList
           data={filteredPlaces}
@@ -286,24 +270,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginBottom: 12,
     overflow: 'hidden'
-  },
-
-  callout: {
-    width: 180,
-    padding: 6
-  },
-
-  calloutTitle: {
-    color: '#1a1a1a',
-    fontSize: 15,
-    fontWeight: 'bold',
-    marginBottom: 2
-  },
-
-  calloutCategory: {
-    color: '#1a6b4a',
-    fontSize: 12,
-    fontWeight: '600'
   },
 
   list: {

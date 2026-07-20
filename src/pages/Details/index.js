@@ -7,7 +7,8 @@ import {
   Text,
   View
 } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+
+import MapViewWrapper from '../../components/MapViewWrapper';
 
 export default function Details({ route }) {
   const { place } = route.params;
@@ -25,9 +26,9 @@ export default function Details({ route }) {
       />
 
       {place.coordinate && (
-        <MapView
-          style={styles.map}
-          initialRegion={{
+        <MapViewWrapper
+          places={[place]}
+          region={{
             latitude: place.coordinate.latitude,
             longitude: place.coordinate.longitude,
             latitudeDelta: 0.01,
@@ -35,12 +36,8 @@ export default function Details({ route }) {
           }}
           scrollEnabled={false}
           zoomEnabled={false}
-        >
-          <Marker
-            coordinate={place.coordinate}
-            title={place.name}
-          />
-        </MapView>
+          style={styles.map}
+        />
       )}
 
       <View style={styles.content}>
