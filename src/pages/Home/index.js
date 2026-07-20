@@ -225,26 +225,28 @@ export default function Home({ navigation }) {
             : 'locais encontrados'}
         </Text>
 
-        <TouchableOpacity
-          style={[
-            styles.toggleButton,
-            showFavoritesOnly && styles.toggleButtonActive
-          ]}
-          onPress={() => setShowFavoritesOnly((prev) => !prev)}
-        >
-          <Text style={styles.toggleButtonText}>
-            {showFavoritesOnly ? '❤️ Favoritos' : '🤍 Favoritos'}
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.resultActions}>
+          <TouchableOpacity
+            style={[
+              styles.toggleButton,
+              showFavoritesOnly && styles.toggleButtonActive
+            ]}
+            onPress={() => setShowFavoritesOnly((prev) => !prev)}
+          >
+            <Text style={styles.toggleButtonText}>
+              {showFavoritesOnly ? '❤️' : '🤍'}
+            </Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.toggleButton}
-          onPress={() => setShowMap((prev) => !prev)}
-        >
-          <Text style={styles.toggleButtonText}>
-            {showMap ? '📋 Lista' : '🗺️ Mapa'}
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.toggleButton}
+            onPress={() => setShowMap((prev) => !prev)}
+          >
+            <Text style={styles.toggleButtonText}>
+              {showMap ? '📋' : '🗺️'}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {showMap ? (
@@ -330,15 +332,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginVertical: 8,
-    gap: 6
+    marginVertical: 6
   },
 
   resultText: {
     color: '#5a6e63',
     fontSize: 13,
-    fontWeight: '500',
-    flexShrink: 1
+    fontWeight: '500'
+  },
+
+  resultActions: {
+    flexDirection: 'row',
+    gap: 6
   },
 
   toggleButton: {
