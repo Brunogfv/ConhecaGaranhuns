@@ -7,6 +7,7 @@ import React, {
 import {
   ActivityIndicator,
   FlatList,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -23,6 +24,12 @@ export default function Home({ navigation }) {
   const [searchText, setSearchText] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [showMap, setShowMap] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const categories = useMemo(() => {
+    const unique = [...new Set(placesData.map((p) => p.category))];
+    return unique.sort();
+  }, []);
 
   function loadPlaces() {
     try {
@@ -53,22 +60,30 @@ export default function Home({ navigation }) {
       .trim()
       .toLowerCase();
 
-    if (normalizedSearch === '') {
-      return places;
+    let result = places;
+
+    if (selectedCategory) {
+      result = result.filter(
+        (place) => place.category === selectedCategory
+      );
     }
 
-    return places.filter((place) => {
-      const name = place.name.toLowerCase();
-      const category = place.category.toLowerCase();
-      const neighborhood = place.neighborhood.toLowerCase();
+    if (normalizedSearch !== '') {
+      result = result.filter((place) => {
+        const name = place.name.toLowerCase();
+        const category = place.category.toLowerCase();
+        const neighborhood = place.neighborhood.toLowerCase();
 
-      return (
-        name.includes(normalizedSearch) ||
-        category.includes(normalizedSearch) ||
-        neighborhood.includes(normalizedSearch)
-      );
-    });
-  }, [places, searchText]);
+        return (
+          name.includes(normalizedSearch) ||
+          category.includes(normalizedSearch) ||
+          neighborhood.includes(normalizedSearch)
+        );
+      });
+    }
+
+    return result;
+  }, [places, searchText, selectedCategory]);
 
   function openDetails(place) {
     navigation.navigate('Details', {
@@ -142,6 +157,56 @@ export default function Home({ navigation }) {
           returnKeyType="search"
         />
       </View>
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.categoryRow}
+        contentContainerStyle={styles.categoryContent}
+      >
+        <TouchableOpacity
+          style={[
+            styles.categoryChip,
+            !selectedCategory && styles.categoryChipActive
+          ]}
+          onPress={() => setSelectedCategory(null)}
+        >
+          <Text
+            style={[
+              styles.categoryChipText,
+              !selectedCategory && styles.categoryChipTextActive
+            ]}
+          >
+            Todos
+          </Text>
+        </TouchableOpacity>
+
+        {categories.map((category) => (
+          <TouchableOpacity
+            key={category}
+            style={[
+              styles.categoryChip,
+              selectedCategory === category &&
+                styles.categoryChipActive
+            ]}
+            onPress={() =>
+              setSelectedCategory(
+                selectedCategory === category ? null : category
+              )
+            }
+          >
+            <Text
+              style={[
+                styles.categoryChipText,
+                selectedCategory === category &&
+                  styles.categoryChipTextActive
+              ]}
+            >
+              {category}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
 
       <View style={styles.resultRow}>
         <Text style={styles.resultText}>
@@ -263,6 +328,39 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 13,
     fontWeight: '600'
+  },
+
+  categoryRow: {
+    maxHeight: 38,
+    marginBottom: 4
+  },
+
+  categoryContent: {
+    gap: 8
+  },
+
+  categoryChip: {
+    backgroundColor: '#ffffff',
+    borderWidth: 1.5,
+    borderColor: '#b8d4c6',
+    borderRadius: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 6
+  },
+
+  categoryChipActive: {
+    backgroundColor: '#1a6b4a',
+    borderColor: '#1a6b4a'
+  },
+
+  categoryChipText: {
+    color: '#4a5c52',
+    fontSize: 13,
+    fontWeight: '600'
+  },
+
+  categoryChipTextActive: {
+    color: '#ffffff'
   },
 
   map: {
