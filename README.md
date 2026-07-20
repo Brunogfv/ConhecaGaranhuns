@@ -20,11 +20,16 @@ informações detalhadas sobre cada ponto.
 
 - Listagem de 8 locais turísticos, culturais e naturais
 - Pesquisa por nome, categoria ou bairro
+- Filtro por categoria (chips)
+- Mapa interativo (lista/mapa toggle)
+- Mini-mapa na tela de detalhes
 - Navegação entre telas (Home e Detalhes)
 - Tela de detalhes com informações completas
 - Indicador de carregamento (ActivityIndicator)
 - Tratamento de lista vazia
 - Campo personalizado: informação sobre entrada/ingresso
+- Imagens reais via Wikimedia Commons
+- Endereços corrigidos com dados oficiais
 
 ## Tecnologias
 
