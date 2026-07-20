@@ -10,6 +10,8 @@ import {
   View
 } from 'react-native';
 
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+
 import MapViewWrapper from '../../components/MapViewWrapper';
 import useFavorites from '../../hooks/useFavorites';
 
@@ -21,7 +23,7 @@ export default function Details({ route }) {
   async function handleShare() {
     try {
       await Share.share({
-        message: `Conheça ${place.name} em Garanhuns!\n\n${place.summary}\n\n📍 ${place.address}\n🎟️ ${place.admission}\n\n📍 Abrir no mapa: https://www.google.com/maps/search/?api=1&query=${place.coordinate.latitude},${place.coordinate.longitude}`,
+        message: `Conheça ${place.name} em Garanhuns!\n\n${place.summary}\n\n📍 ${place.address}\n🎟️ ${place.admission}\n\nAbrir no mapa: https://www.google.com/maps/search/?api=1&query=${place.coordinate.latitude},${place.coordinate.longitude}`,
         title: place.name
       });
     } catch (error) {
@@ -46,16 +48,18 @@ export default function Details({ route }) {
           style={styles.imageActionButton}
           onPress={() => toggleFavorite(place.id)}
         >
-          <Text style={styles.imageActionIcon}>
-            {fav ? '❤️' : '🤍'}
-          </Text>
+          <Ionicons
+            name={fav ? 'heart' : 'heart-outline'}
+            size={20}
+            color={fav ? '#c0392b' : '#555555'}
+          />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.imageActionButton}
           onPress={handleShare}
         >
-          <Text style={styles.imageActionIcon}>📤</Text>
+          <Ionicons name="share-social-outline" size={20} color="#555555" />
         </TouchableOpacity>
       </View>
 
@@ -76,62 +80,49 @@ export default function Details({ route }) {
 
       <View style={styles.content}>
         <View style={styles.categoryContainer}>
-          <Text style={styles.category}>
-            {place.category}
-          </Text>
+          <Text style={styles.category}>{place.category}</Text>
         </View>
 
-        <Text style={styles.name}>
-          {place.name}
-        </Text>
+        <Text style={styles.name}>{place.name}</Text>
 
-        <Text style={styles.neighborhood}>
-          📍 Bairro: {place.neighborhood}
-        </Text>
-
-        <View style={styles.informationBox}>
-          <Text style={styles.informationTitle}>
-            📌 Endereço
-          </Text>
-
-          <Text style={styles.informationText}>
-            {place.address}
-          </Text>
+        <View style={styles.neighborhoodRow}>
+          <Ionicons name="location-outline" size={15} color="#555555" />
+          <Text style={styles.neighborhood}>Bairro: {place.neighborhood}</Text>
         </View>
 
         <View style={styles.informationBox}>
-          <Text style={styles.informationTitle}>
-            🕐 Horário de funcionamento
-          </Text>
-
-          <Text style={styles.informationText}>
-            {place.openingHours}
-          </Text>
+          <View style={styles.informationTitleRow}>
+            <Ionicons name="location" size={15} color="#1a6b4a" />
+            <Text style={styles.informationTitle}>Endereço</Text>
+          </View>
+          <Text style={styles.informationText}>{place.address}</Text>
         </View>
 
         <View style={styles.informationBox}>
-          <Text style={styles.informationTitle}>
-            🎟️ Entrada
-          </Text>
-
-          <Text style={styles.informationText}>
-            {place.admission}
-          </Text>
+          <View style={styles.informationTitleRow}>
+            <Ionicons name="time-outline" size={15} color="#1a6b4a" />
+            <Text style={styles.informationTitle}>Horário de funcionamento</Text>
+          </View>
+          <Text style={styles.informationText}>{place.openingHours}</Text>
         </View>
 
-        <Text style={styles.sectionTitle}>
-          Sobre o local
-        </Text>
+        <View style={styles.informationBox}>
+          <View style={styles.informationTitleRow}>
+            <MaterialCommunityIcons name="ticket-outline" size={15} color="#1a6b4a" />
+            <Text style={styles.informationTitle}>Entrada</Text>
+          </View>
+          <Text style={styles.informationText}>{place.admission}</Text>
+        </View>
 
-        <Text style={styles.description}>
-          {place.description}
-        </Text>
+        <Text style={styles.sectionTitle}>Sobre o local</Text>
+
+        <Text style={styles.description}>{place.description}</Text>
 
         <View style={styles.warningBox}>
-          <Text style={styles.warningTitle}>
-            ⚠️ Observação
-          </Text>
-
+          <View style={styles.informationTitleRow}>
+            <Ionicons name="warning-outline" size={15} color="#755b00" />
+            <Text style={styles.warningTitle}>Observação</Text>
+          </View>
           <Text style={styles.warningText}>
             As informações apresentadas possuem finalidade
             educacional. Horários e condições de visitação
@@ -176,10 +167,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
-  imageActionIcon: {
-    fontSize: 20
-  },
-
   map: {
     width: '100%',
     height: 180,
@@ -214,10 +201,16 @@ const styles = StyleSheet.create({
     marginBottom: 8
   },
 
+  neighborhoodRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 22
+  },
+
   neighborhood: {
     color: '#555555',
-    fontSize: 15,
-    marginBottom: 22
+    fontSize: 15
   },
 
   informationBox: {
@@ -229,11 +222,17 @@ const styles = StyleSheet.create({
     borderColor: '#e0ece6'
   },
 
+  informationTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 6
+  },
+
   informationTitle: {
     color: '#1a6b4a',
     fontSize: 15,
-    fontWeight: 'bold',
-    marginBottom: 6
+    fontWeight: 'bold'
   },
 
   informationText: {
@@ -269,8 +268,7 @@ const styles = StyleSheet.create({
   warningTitle: {
     color: '#755b00',
     fontSize: 15,
-    fontWeight: 'bold',
-    marginBottom: 6
+    fontWeight: 'bold'
   },
 
   warningText: {
