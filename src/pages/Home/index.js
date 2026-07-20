@@ -7,7 +7,6 @@ import React, {
 import {
   ActivityIndicator,
   FlatList,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -167,12 +166,7 @@ export default function Home({ navigation }) {
         />
       </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.categoryRow}
-        contentContainerStyle={styles.categoryContent}
-      >
+      <View style={styles.categoryRow}>
         <TouchableOpacity
           style={[
             styles.categoryChip,
@@ -215,7 +209,7 @@ export default function Home({ navigation }) {
             </Text>
           </TouchableOpacity>
         ))}
-      </ScrollView>
+      </View>
 
       <View style={styles.resultRow}>
         <Text style={styles.resultText}>
@@ -364,15 +358,10 @@ const styles = StyleSheet.create({
   },
 
   categoryRow: {
-    height: 34,
-    flexGrow: 0,
-    marginBottom: 6
-  },
-
-  categoryContent: {
-    alignItems: 'center',
     flexDirection: 'row',
-    gap: 6
+    flexWrap: 'wrap',
+    gap: 6,
+    marginBottom: 6
   },
 
   categoryChip: {
