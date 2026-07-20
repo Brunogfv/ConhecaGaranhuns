@@ -4,10 +4,10 @@ Projeto final da disciplina de Programação em Dispositivos Móveis.
 
 ## Integrantes
 
-- Alberto Breno
-- Arthur Padilha
-- Bruno Gomes
-- Leandro Machado
+- **Alberto Breno** — Desenvolvimento da tela principal (Home): FlatList, filtro por categoria (chips), toggle entre lista e mapa, botão de favoritos na home
+- **Arthur Padilha** — Criação de componentes reutilizáveis (PlaceCard), implementação do campo de pesquisa com filtro por nome/categoria/bairro, indicador de carregamento e mensagem de lista vazia
+- **Bruno Gomes** — Configuração inicial do projeto, criação do repositório GitHub, configuração do React Navigation (App.js), estrutura de pastas e integração geral
+- **Leandro Machado** — Desenvolvimento da tela de detalhes (informações, mapa, favoritos, compartilhar), campo personalizado `admission`, personalização visual (cores, imagens reais, README)
 
 ## Descrição
 
