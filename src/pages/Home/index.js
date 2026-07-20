@@ -310,7 +310,8 @@ const styles = StyleSheet.create({
     borderColor: '#b8d4c6',
     borderWidth: 1.5,
     borderRadius: 14,
-    paddingHorizontal: 14
+    paddingHorizontal: 14,
+    marginBottom: 8
   },
 
   searchIcon: {
@@ -358,23 +359,24 @@ const styles = StyleSheet.create({
   },
 
   categoryRow: {
-    height: 40,
+    height: 34,
     flexGrow: 0,
-    marginBottom: 8
+    marginBottom: 6
   },
 
   categoryContent: {
     alignItems: 'center',
-    gap: 8
+    flexDirection: 'row',
+    gap: 6
   },
 
   categoryChip: {
     backgroundColor: '#ffffff',
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: '#b8d4c6',
-    borderRadius: 20,
-    paddingHorizontal: 14,
-    paddingVertical: 6
+    borderRadius: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 4
   },
 
   categoryChipActive: {
@@ -384,7 +386,7 @@ const styles = StyleSheet.create({
 
   categoryChipText: {
     color: '#4a5c52',
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '600'
   },
 
