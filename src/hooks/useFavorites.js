@@ -7,16 +7,22 @@ export default function useFavorites() {
   const [favoriteIds, setFavoriteIds] = useState([]);
 
   useEffect(() => {
-    AsyncStorage.getItem(STORAGE_KEY).then((data) => {
-      if (data) {
-        setFavoriteIds(JSON.parse(data));
-      }
-    });
+    AsyncStorage.getItem(STORAGE_KEY)
+      .then((data) => {
+        if (data) {
+          setFavoriteIds(JSON.parse(data));
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao carregar os favoritos:', error);
+      });
   }, []);
 
   const persist = useCallback((ids) => {
     setFavoriteIds(ids);
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(ids)).catch((error) => {
+      console.error('Erro ao salvar os favoritos:', error);
+    });
   }, []);
 
   const toggleFavorite = useCallback(

@@ -7,6 +7,7 @@ import React, {
 import {
   ActivityIndicator,
   FlatList,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -14,10 +15,14 @@ import {
   View
 } from 'react-native';
 
+import { Ionicons } from '@expo/vector-icons';
+
 import MapViewWrapper from '../../components/MapViewWrapper';
 import PlaceCard from '../../components/PlaceCard';
+import WelcomeModal from '../../components/WelcomeModal';
 import placesData from '../../data/places';
 import useFavorites from '../../hooks/useFavorites';
+import useFirstLaunch from '../../hooks/useFirstLaunch';
 
 export default function Home({ navigation }) {
   const [places, setPlaces] = useState([]);
@@ -27,6 +32,7 @@ export default function Home({ navigation }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const { favoriteIds, isFavorite, toggleFavorite } = useFavorites();
+  const { showWelcome, dismissWelcome } = useFirstLaunch();
 
   const categories = useMemo(() => {
     const unique = [...new Set(placesData.map((p) => p.category))];
@@ -36,18 +42,12 @@ export default function Home({ navigation }) {
   function loadPlaces() {
     try {
       setIsLoading(true);
-
-      /*
-       * O setTimeout simula o tempo necessário para carregar
-       * informações de uma API ou de um banco de dados.
-       */
       setTimeout(() => {
         setPlaces(placesData);
         setIsLoading(false);
       }, 1000);
     } catch (error) {
       console.error('Erro ao carregar os locais:', error);
-
       setPlaces([]);
       setIsLoading(false);
     }
@@ -58,16 +58,11 @@ export default function Home({ navigation }) {
   }, []);
 
   const filteredPlaces = useMemo(() => {
-    const normalizedSearch = searchText
-      .trim()
-      .toLowerCase();
-
+    const normalizedSearch = searchText.trim().toLowerCase();
     let result = places;
 
     if (selectedCategory) {
-      result = result.filter(
-        (place) => place.category === selectedCategory
-      );
+      result = result.filter((place) => place.category === selectedCategory);
     }
 
     if (showFavoritesOnly) {
@@ -79,7 +74,6 @@ export default function Home({ navigation }) {
         const name = place.name.toLowerCase();
         const category = place.category.toLowerCase();
         const neighborhood = place.neighborhood.toLowerCase();
-
         return (
           name.includes(normalizedSearch) ||
           category.includes(normalizedSearch) ||
@@ -92,9 +86,7 @@ export default function Home({ navigation }) {
   }, [places, searchText, selectedCategory, showFavoritesOnly, favoriteIds]);
 
   function openDetails(place) {
-    navigation.navigate('Details', {
-      place: place
-    });
+    navigation.navigate('Details', { place });
   }
 
   function renderPlace({ item }) {
@@ -108,15 +100,20 @@ export default function Home({ navigation }) {
     );
   }
 
+  function renderListHeader() {
+    return (
+      <Text style={styles.resultCount}>
+        {filteredPlaces.length}{' '}
+        {filteredPlaces.length === 1 ? 'local encontrado' : 'locais encontrados'}
+      </Text>
+    );
+  }
+
   function renderEmptyList() {
     return (
       <View style={styles.emptyContainer}>
-        <Text style={styles.emptyIcon}>🔍</Text>
-
-        <Text style={styles.emptyTitle}>
-          Nenhum local encontrado
-        </Text>
-
+        <Ionicons name="search-outline" size={56} color="#aaaaaa" />
+        <Text style={styles.emptyTitle}>Nenhum local encontrado</Text>
         <Text style={styles.emptyMessage}>
           Verifique o texto pesquisado e tente novamente.
         </Text>
@@ -127,120 +124,98 @@ export default function Home({ navigation }) {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator
-          size="large"
-          color="#1a6b4a"
-        />
-
-        <Text style={styles.loadingText}>
-          Carregando locais...
-        </Text>
+        <ActivityIndicator size="large" color="#1a6b4a" />
+        <Text style={styles.loadingText}>Carregando locais...</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.introduction}>
-        <Text style={styles.title}>
-          Explore Garanhuns 🌿
-        </Text>
+      <WelcomeModal visible={showWelcome} onClose={dismissWelcome} />
 
-        <Text style={styles.subtitle}>
-          Descubra os encantos turísticos, culturais e
-          naturais da Suíça Pernambucana.
-        </Text>
-      </View>
-
-      <View style={styles.searchContainer}>
-        <Text style={styles.searchIcon}>🔎</Text>
-        <TextInput
-          style={styles.input}
-          value={searchText}
-          onChangeText={setSearchText}
-          placeholder="Pesquisar por nome, categoria ou bairro"
-          placeholderTextColor="#888888"
-          autoCapitalize="none"
-          autoCorrect={false}
-          returnKeyType="search"
-        />
-      </View>
-
-      <View style={styles.categoryRow}>
-        <TouchableOpacity
-          style={[
-            styles.categoryChip,
-            !selectedCategory && styles.categoryChipActive
-          ]}
-          onPress={() => setSelectedCategory(null)}
-        >
-          <Text
-            style={[
-              styles.categoryChipText,
-              !selectedCategory && styles.categoryChipTextActive
-            ]}
-          >
-            Todos
-          </Text>
-        </TouchableOpacity>
-
-        {categories.map((category) => (
-          <TouchableOpacity
-            key={category}
-            style={[
-              styles.categoryChip,
-              selectedCategory === category &&
-                styles.categoryChipActive
-            ]}
-            onPress={() =>
-              setSelectedCategory(
-                selectedCategory === category ? null : category
-              )
-            }
-          >
-            <Text
-              style={[
-                styles.categoryChipText,
-                selectedCategory === category &&
-                  styles.categoryChipTextActive
-              ]}
+      <View style={styles.header}>
+        <View style={styles.searchContainer}>
+          <Ionicons name="search" size={16} color="#888888" />
+          <TextInput
+            style={styles.input}
+            value={searchText}
+            onChangeText={setSearchText}
+            placeholder="Pesquisar por nome, categoria ou bairro"
+            placeholderTextColor="#888888"
+            autoCapitalize="none"
+            autoCorrect={false}
+            returnKeyType="search"
+          />
+          {searchText.length > 0 && (
+            <TouchableOpacity
+              onPress={() => setSearchText('')}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
-              {category}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+              <Ionicons name="close-circle" size={18} color="#aaaaaa" />
+            </TouchableOpacity>
+          )}
+        </View>
 
-      <View style={styles.resultRow}>
-        <Text style={styles.resultText}>
-          {filteredPlaces.length}{' '}
-          {filteredPlaces.length === 1
-            ? 'local encontrado'
-            : 'locais encontrados'}
-        </Text>
-
-        <View style={styles.resultActions}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.chipsContent}
+          keyboardShouldPersistTaps="handled"
+        >
           <TouchableOpacity
-            style={[
-              styles.toggleButton,
-              showFavoritesOnly && styles.toggleButtonActive
-            ]}
+            style={[styles.chip, showFavoritesOnly && styles.chipFavoriteActive]}
             onPress={() => setShowFavoritesOnly((prev) => !prev)}
           >
-            <Text style={styles.toggleButtonText}>
-              {showFavoritesOnly ? '❤️' : '🤍'}
+            <Ionicons
+              name={showFavoritesOnly ? 'heart' : 'heart-outline'}
+              size={12}
+              color={showFavoritesOnly ? '#ffffff' : '#4a5c52'}
+            />
+            <Text style={[styles.chipText, showFavoritesOnly && styles.chipTextActive]}>
+              Favoritos
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.toggleButton}
+            style={[styles.chip, showMap && styles.chipActive]}
             onPress={() => setShowMap((prev) => !prev)}
           >
-            <Text style={styles.toggleButtonText}>
-              {showMap ? '📋' : '🗺️'}
+            <Ionicons
+              name={showMap ? 'list-outline' : 'map-outline'}
+              size={12}
+              color={showMap ? '#ffffff' : '#4a5c52'}
+            />
+            <Text style={[styles.chipText, showMap && styles.chipTextActive]}>
+              {showMap ? 'Lista' : 'Mapa'}
             </Text>
           </TouchableOpacity>
-        </View>
+
+          <View style={styles.chipSeparator} />
+
+          <TouchableOpacity
+            style={[styles.chip, !selectedCategory && styles.chipActive]}
+            onPress={() => setSelectedCategory(null)}
+          >
+            <Text style={[styles.chipText, !selectedCategory && styles.chipTextActive]}>
+              Todos
+            </Text>
+          </TouchableOpacity>
+
+          {categories.map((category) => (
+            <TouchableOpacity
+              key={category}
+              style={[styles.chip, selectedCategory === category && styles.chipActive]}
+              onPress={() =>
+                setSelectedCategory(selectedCategory === category ? null : category)
+              }
+            >
+              <Text style={[styles.chipText, selectedCategory === category && styles.chipTextActive]}>
+                {category}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
 
       {showMap ? (
@@ -260,11 +235,10 @@ export default function Home({ navigation }) {
           data={filteredPlaces}
           renderItem={renderPlace}
           keyExtractor={(item) => item.id}
+          ListHeaderComponent={renderListHeader}
           ListEmptyComponent={renderEmptyList}
           contentContainerStyle={
-            filteredPlaces.length === 0
-              ? styles.emptyList
-              : styles.list
+            filteredPlaces.length === 0 ? styles.emptyList : styles.list
           }
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -277,130 +251,105 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f5f2',
-    paddingHorizontal: 16
+    backgroundColor: '#f0f5f2'
   },
 
-  introduction: {
-    paddingTop: 22,
-    paddingBottom: 18
-  },
-
-  title: {
-    color: '#1a6b4a',
-    fontSize: 30,
-    fontWeight: 'bold',
-    marginBottom: 8
-  },
-
-  subtitle: {
-    color: '#4a5c52',
-    fontSize: 16,
-    lineHeight: 23
+  header: {
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0ece6'
   },
 
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
-    borderColor: '#b8d4c6',
-    borderWidth: 1.5,
-    borderRadius: 14,
-    paddingHorizontal: 14,
-    marginBottom: 8
-  },
-
-  searchIcon: {
-    fontSize: 16,
-    marginRight: 8
+    backgroundColor: '#f0f5f2',
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    gap: 8,
+    marginBottom: 10
   },
 
   input: {
     flex: 1,
     color: '#222222',
     fontSize: 15,
-    paddingVertical: 14
+    paddingVertical: 10
   },
 
-  resultRow: {
+  chipsContent: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginVertical: 6
-  },
-
-  resultText: {
-    color: '#5a6e63',
-    fontSize: 13,
-    fontWeight: '500'
-  },
-
-  resultActions: {
-    flexDirection: 'row',
-    gap: 6
-  },
-
-  toggleButton: {
-    backgroundColor: '#1a6b4a',
-    borderRadius: 20,
-    paddingHorizontal: 14,
-    paddingVertical: 6
-  },
-
-  toggleButtonActive: {
-    backgroundColor: '#c0392b'
-  },
-
-  toggleButtonText: {
-    color: '#ffffff',
-    fontSize: 13,
-    fontWeight: '600'
-  },
-
-  categoryRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     gap: 6,
-    marginBottom: 6
+    paddingRight: 4
   },
 
-  categoryChip: {
-    backgroundColor: '#ffffff',
+  chip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#f0f5f2',
     borderWidth: 1,
-    borderColor: '#b8d4c6',
+    borderColor: '#c8ddd4',
     borderRadius: 16,
     paddingHorizontal: 12,
-    paddingVertical: 4
+    paddingVertical: 5
   },
 
-  categoryChipActive: {
+  chipActive: {
     backgroundColor: '#1a6b4a',
     borderColor: '#1a6b4a'
   },
 
-  categoryChipText: {
+  chipFavoriteActive: {
+    backgroundColor: '#c0392b',
+    borderColor: '#c0392b'
+  },
+
+  chipText: {
     color: '#4a5c52',
     fontSize: 12,
     fontWeight: '600'
   },
 
-  categoryChipTextActive: {
+  chipTextActive: {
     color: '#ffffff'
+  },
+
+  chipSeparator: {
+    width: 1,
+    height: 18,
+    backgroundColor: '#c8ddd4',
+    marginHorizontal: 2
+  },
+
+  resultCount: {
+    color: '#5a6e63',
+    fontSize: 13,
+    fontWeight: '500',
+    paddingHorizontal: 16,
+    paddingTop: 14,
+    paddingBottom: 6
   },
 
   map: {
     flex: 1,
+    margin: 12,
     borderRadius: 16,
-    marginBottom: 12,
     overflow: 'hidden'
   },
 
   list: {
+    paddingHorizontal: 16,
     paddingBottom: 24
   },
 
   emptyList: {
-    flexGrow: 1
+    flexGrow: 1,
+    paddingHorizontal: 16
   },
 
   loadingContainer: {
@@ -421,19 +370,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 30
-  },
-
-  emptyIcon: {
-    fontSize: 48,
-    marginBottom: 16
+    paddingHorizontal: 30,
+    paddingTop: 60,
+    gap: 12
   },
 
   emptyTitle: {
     color: '#333333',
     fontSize: 21,
     fontWeight: 'bold',
-    marginBottom: 8,
     textAlign: 'center'
   },
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { Ionicons } from '@expo/vector-icons';
+
 function openMaps(lat, lng) {
   Linking.openURL(
     `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
@@ -11,7 +13,8 @@ export default function MapViewWrapper({ places = [], onPlacePress, style }) {
   return (
     <View style={[styles.container, style]}>
       <View style={styles.header}>
-        <Text style={styles.title}>🗺️ Locais no mapa</Text>
+        <Ionicons name="map" size={18} color="#1a6b4a" />
+        <Text style={styles.title}>Locais no mapa</Text>
       </View>
 
       {places.length === 0 ? (
@@ -27,9 +30,7 @@ export default function MapViewWrapper({ places = [], onPlacePress, style }) {
             style={styles.item}
             onPress={() => onPlacePress?.(place)}
           >
-            <View style={styles.itemDot}>
-              <Text>📍</Text>
-            </View>
+            <Ionicons name="location" size={20} color="#1a6b4a" style={styles.itemIcon} />
 
             <View style={styles.itemContent}>
               <Text style={styles.itemName}>{place.name}</Text>
@@ -63,6 +64,9 @@ const styles = StyleSheet.create({
   },
 
   header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
     padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#e0ece6'
@@ -82,7 +86,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f0f5f2'
   },
 
-  itemDot: {
+  itemIcon: {
     marginRight: 12
   },
 
