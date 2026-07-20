@@ -230,10 +230,10 @@ export default function Home({ navigation }) {
         <MapViewWrapper
           places={filteredPlaces}
           region={{
-            latitude: -8.885,
-            longitude: -36.492,
-            latitudeDelta: 0.04,
-            longitudeDelta: 0.04
+            latitude: -8.884,
+            longitude: -36.497,
+            latitudeDelta: 0.03,
+            longitudeDelta: 0.055
           }}
           onPlacePress={(place) => navigation.navigate('Details', { place })}
           style={styles.map}

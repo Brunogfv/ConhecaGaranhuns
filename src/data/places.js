@@ -10,7 +10,7 @@ const places = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Garanhuns-rel%C3%B3gio-flores.jpg',
     coordinate: {
       latitude: -8.8815,
-      longitude: -36.4912
+      longitude: -36.4767
     },
     summary:
       'Principal cartão-postal de Garanhuns, localizado na Praça Tavares Correia, no bairro Heliópolis.',
@@ -27,8 +27,8 @@ const places = [
     admission: 'Entrada gratuita',
     image: 'https://upload.wikimedia.org/wikipedia/commons/3/34/Parque_Euclides_Dourado_%28Parque_dos_Eucaliptos%29_-_Garanhuns%2C_Pernambuco%2C_Brasil.jpg',
     coordinate: {
-      latitude: -8.8858,
-      longitude: -36.4925
+      latitude: -8.8835,
+      longitude: -36.4845
     },
     summary:
       'Também conhecido como Parque dos Eucaliptos, é o maior parque urbano de Garanhuns, com 8 hectares de área verde.',
@@ -63,8 +63,8 @@ const places = [
     admission: 'Consultar no local',
     image: 'https://upload.wikimedia.org/wikipedia/commons/2/21/BRUNO_LIMA_CASTELO_DE_JO%C3%83O_CAP%C3%83O_GARANHUNS_PE.jpg',
     coordinate: {
-      latitude: -8.8790,
-      longitude: -36.4895
+      latitude: -8.8769,
+      longitude: -36.4854
     },
     summary:
       'Construção singular idealizada por João Ferreira da Silva, o João Capão, que realizou o sonho de construir seu próprio castelo.',
@@ -81,8 +81,8 @@ const places = [
     admission: 'Entrada gratuita para a maioria dos eventos',
     image: 'https://upload.wikimedia.org/wikipedia/commons/4/49/Centro_Cultural_-_Garanhuns%2C_Pernambuco%2C_Brasil.jpg',
     coordinate: {
-      latitude: -8.8915,
-      longitude: -36.4935
+      latitude: -8.8910,
+      longitude: -36.4930
     },
     summary:
       'Antiga Estação Ferroviária de Garanhuns, tombada como patrimônio histórico, hoje funciona como centro cultural e teatro.',
@@ -99,8 +99,8 @@ const places = [
     admission: 'Entrada gratuita',
     image: 'https://upload.wikimedia.org/wikipedia/commons/6/63/Santu%C3%A1rio_M%C3%A3e_Rainha_-_Garanhuns%2C_Pernambuco%2C_Brasil%281%29.jpg',
     coordinate: {
-      latitude: -8.8780,
-      longitude: -36.4880
+      latitude: -8.8770,
+      longitude: -36.4870
     },
     summary:
       'Santuário do movimento de Schoenstatt, localizado no bairro Severiano Moraes Filho, voltado à oração e contemplação.',
@@ -117,8 +117,8 @@ const places = [
     admission: 'Entrada gratuita',
     image: 'https://upload.wikimedia.org/wikipedia/commons/1/13/Igreja_Matriz_de_Santo_Ant%C3%B4nio_-_Garanhuns%2C_Pernambuco%2C_Brasil.jpg',
     coordinate: {
-      latitude: -8.8918,
-      longitude: -36.4932
+      latitude: -8.8906,
+      longitude: -36.4920
     },
     summary:
       'Primeiro templo católico de Garanhuns, datado de 1859, elevado a catedral em 1918 com a criação da Diocese.',
