@@ -223,7 +223,7 @@ const places = [
     address: 'Rua Coronel Antônio Vítor, 100, Heliópolis, Garanhuns - PE',
     openingHours: 'Espaço público com visitação livre',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/b/b3/Garanhuns-p%C3%B3rtico.jpg',
+    image: require('../../assets/imgs/praca_mestre_dominguinhos.jpg'),
     coordinate: {
       latitude: -8.8905,
       longitude: -36.4931
@@ -241,7 +241,7 @@ const places = [
     address: 'Bairro Boa Vista, Garanhuns - PE',
     openingHours: 'Diariamente: 05h às 22h',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/7/79/Parque_em_Garanhuns.jpg',
+    image: require('../../assets/imgs/parque_luiz_carlos.jpg'),
     coordinate: {
       latitude: -8.8961,
       longitude: -36.4855
@@ -259,7 +259,7 @@ const places = [
     address: 'Fazenda São Silvestre, Zona Rural, Garanhuns - PE',
     openingHours: 'Visitas e degustações mediante agendamento',
     admission: 'Visitas guiadas (consultar valores)',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/2/21/Sert%C3%A3o_de_Guaranhuns_-PE_-_panoramio.jpg',
+    image: require('../../assets/imgs/vinicola_vale.jpeg'),
     coordinate: {
       latitude: -8.9399,
       longitude: -36.5235
@@ -277,7 +277,7 @@ const places = [
     address: 'Área das nascentes do Rio Mundaú, Várzea, Garanhuns - PE',
     openingHours: 'Visitação mediante agendamento',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Paisagem_-_panoramio_-_MAC%C3%8DLIO_GOMES.jpg',
+    image: require('../../assets/imgs/lago_mundau.jpg'),
     coordinate: {
       latitude: -8.9105,
       longitude: -36.5085
@@ -295,7 +295,7 @@ const places = [
     address: 'Praça São Sebastião, 142, Boa Vista, Garanhuns - PE',
     openingHours: 'Missas: quinta e sábado às 19h30 | Domingo às 07h, 11h e 19h30',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/9/90/Garanhuns_-_Pernambuco_-_Brasil%282%29.jpg',
+    image: require('../../assets/imgs/igreja_sao_sebastiao.jpeg'),
     coordinate: {
       latitude: -8.8905,
       longitude: -36.4975
@@ -313,7 +313,7 @@ const places = [
     address: 'Avenida Simoa Gomes, 27, Heliópolis, Garanhuns - PE',
     openingHours: 'Missas: sábado às 16h | Domingo às 07h, 09h e 19h',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/4/46/Garanhuns_-_Pernambuco_-_Brasil%283%29.jpg',
+    image: require('../../assets/imgs/igreja_perpetuo_socorro.jpg'),
     coordinate: {
       latitude: -8.8862,
       longitude: -36.4938
@@ -331,7 +331,7 @@ const places = [
     address: 'Rua Cônego Benigno Lira, Centro, Garanhuns - PE',
     openingHours: 'Terça: 08h às 20h | Quarta a sábado: 08h às 22h | Domingo: 11h às 20h',
     admission: 'Entrada gratuita (algumas atividades podem ter custo)',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/R%C3%A1dio_Jornal_-_Garanhuns%2C_Pernambuco%2C_Brasil.jpg',
+    image: require('../../assets/imgs/sesc_garanhuns.jpg'),
     coordinate: {
       latitude: -8.8912,
       longitude: -36.4955
@@ -349,7 +349,7 @@ const places = [
     address: 'Praça Dom Moura, Centro, Garanhuns - PE',
     openingHours: 'Segunda a sexta: 08h às 17h | Sábado: 08h às 12h',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Garanhuns_-_Pernambuco_-_Brasil%281%29.jpg',
+    image: require('../../assets/imgs/casa_artesao.jpg'),
     coordinate: {
       latitude: -8.8908,
       longitude: -36.4942
@@ -367,7 +367,7 @@ const places = [
     address: 'CEAGA, Avenida Frei Caneca, São José, Garanhuns - PE',
     openingHours: 'Domingos, a partir das 05h até por volta do meio-dia',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/3/37/Garanhuns_-_Pernambuco_-_Brasil%284%29.jpg',
+    image: require('../../assets/imgs/feira_troca.jpg'),
     coordinate: {
       latitude: -8.8952,
       longitude: -36.4884
@@ -385,7 +385,7 @@ const places = [
     address: 'Distrito de Iratama, Zona Rural, Garanhuns - PE',
     openingHours: 'Acesso livre (visitação diurna)',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/7/70/Garanhuns_%28PE%29_vista_do_Monte_Magano.jpg',
+    image: require('../../assets/imgs/iratama.jpg'),
     coordinate: {
       latitude: -8.8347,
       longitude: -36.4589
@@ -403,7 +403,7 @@ const places = [
     address: 'Distrito de São Pedro, Zona Rural, Garanhuns - PE',
     openingHours: 'Acesso livre (visitação diurna)',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/0/09/Vista_parcial_de_Garanhuns%2C_PE.jpg',
+    image: require('../../assets/imgs/sao_pedro.jpg'),
     coordinate: {
       latitude: -8.9241,
       longitude: -36.5342
@@ -421,7 +421,7 @@ const places = [
     address: 'Distrito de Miracica, Zona Rural, Garanhuns - PE',
     openingHours: 'Acesso livre (visitação diurna)',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/Garanhuns-vista-geral.jpg',
+    image: require('../../assets/imgs/miracica.jpg'),
     coordinate: {
       latitude: -8.8563,
       longitude: -36.5501
@@ -439,7 +439,7 @@ const places = [
     address: 'Açude Mundaú, Rio Mundaú, Garanhuns - PE',
     openingHours: 'Acesso livre durante o dia',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Paisagem_-_panoramio_-_MAC%C3%8DLIO_GOMES.jpg',
+    image: require('../../assets/imgs/lago_mundau.jpg'),
     coordinate: {
       latitude: -8.9156,
       longitude: -36.5234

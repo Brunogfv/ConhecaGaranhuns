@@ -20,7 +20,7 @@ export default function PlaceCard({ place, onPress, isFavorite, onToggleFavorite
       onPress={onPress}
     >
       <Image
-        source={{ uri: place.image }}
+        source={typeof place.image === 'string' ? { uri: place.image } : place.image}
         style={styles.image}
         resizeMode="cover"
       />

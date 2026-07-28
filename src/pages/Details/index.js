@@ -38,7 +38,7 @@ export default function Details({ route }) {
       showsVerticalScrollIndicator={false}
     >
       <Image
-        source={{ uri: place.image }}
+        source={typeof place.image === 'string' ? { uri: place.image } : place.image}
         style={styles.image}
         resizeMode="cover"
       />

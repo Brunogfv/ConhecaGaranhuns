@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 
@@ -6,13 +6,44 @@ export default function MapViewWrapper({
   places = [],
   region,
   onPlacePress,
+  onMapReady: onParentMapReady,
   style,
   ...props
 }) {
+  const mapRef = useRef(null);
+
+  const handleMapReady = useCallback(() => {
+    if (places.length === 0) return;
+
+    onParentMapReady?.();
+
+    if (places.length === 1) {
+      mapRef.current?.animateToRegion(
+        {
+          latitude: places[0].coordinate.latitude,
+          longitude: places[0].coordinate.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01
+        },
+        500
+      );
+    } else {
+      mapRef.current?.fitToCoordinates(
+        places.map((p) => p.coordinate),
+        {
+          edgePadding: { top: 60, right: 60, bottom: 60, left: 60 },
+          animated: true
+        }
+      );
+    }
+  }, [places, onParentMapReady]);
+
   return (
     <MapView
+      ref={mapRef}
       style={[styles.map, style]}
       initialRegion={region}
+      onMapReady={handleMapReady}
       {...props}
     >
       {places.map((place) => (

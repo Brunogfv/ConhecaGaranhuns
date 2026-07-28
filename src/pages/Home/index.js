@@ -39,6 +39,21 @@ export default function Home({ navigation }) {
     return unique.sort();
   }, []);
 
+  const defaultRegion = useMemo(() => {
+    const lats = placesData.map((p) => p.coordinate.latitude);
+    const lngs = placesData.map((p) => p.coordinate.longitude);
+    const minLat = Math.min(...lats);
+    const maxLat = Math.max(...lats);
+    const minLng = Math.min(...lngs);
+    const maxLng = Math.max(...lngs);
+    return {
+      latitude: (minLat + maxLat) / 2,
+      longitude: (minLng + maxLng) / 2,
+      latitudeDelta: (maxLat - minLat) * 1.3,
+      longitudeDelta: (maxLng - minLng) * 1.3
+    };
+  }, []);
+
   function loadPlaces() {
     try {
       setIsLoading(true);
@@ -221,12 +236,7 @@ export default function Home({ navigation }) {
       {showMap ? (
         <MapViewWrapper
           places={filteredPlaces}
-          region={{
-            latitude: -8.884,
-            longitude: -36.497,
-            latitudeDelta: 0.03,
-            longitudeDelta: 0.055
-          }}
+          region={defaultRegion}
           onPlacePress={(place) => navigation.navigate('Details', { place })}
           style={styles.map}
         />

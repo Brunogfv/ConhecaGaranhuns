@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -24,32 +24,39 @@ export default function MapViewWrapper({ places = [], onPlacePress, style }) {
           </Text>
         </View>
       ) : (
-        places.map((place) => (
-          <TouchableOpacity
-            key={place.id}
-            style={styles.item}
-            onPress={() => onPlacePress?.(place)}
-          >
-            <Ionicons name="location" size={20} color="#1a6b4a" style={styles.itemIcon} />
-
-            <View style={styles.itemContent}>
-              <Text style={styles.itemName}>{place.name}</Text>
-              <Text style={styles.itemCategory}>{place.category}</Text>
-            </View>
-
+        <ScrollView
+          style={styles.list}
+          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          {places.map((place) => (
             <TouchableOpacity
-              style={styles.itemButton}
-              onPress={() =>
-                openMaps(
-                  place.coordinate.latitude,
-                  place.coordinate.longitude
-                )
-              }
+              key={place.id}
+              style={styles.item}
+              onPress={() => onPlacePress?.(place)}
             >
-              <Text style={styles.itemButtonText}>Abrir no Maps</Text>
+              <Ionicons name="location" size={20} color="#1a6b4a" style={styles.itemIcon} />
+
+              <View style={styles.itemContent}>
+                <Text style={styles.itemName}>{place.name}</Text>
+                <Text style={styles.itemCategory}>{place.category}</Text>
+              </View>
+
+              <TouchableOpacity
+                style={styles.itemButton}
+                onPress={() =>
+                  openMaps(
+                    place.coordinate.latitude,
+                    place.coordinate.longitude
+                  )
+                }
+              >
+                <Text style={styles.itemButtonText}>Abrir no Maps</Text>
+              </TouchableOpacity>
             </TouchableOpacity>
-          </TouchableOpacity>
-        ))
+          ))}
+        </ScrollView>
       )}
     </View>
   );
@@ -118,6 +125,14 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 12,
     fontWeight: '600'
+  },
+
+  list: {
+    flex: 1
+  },
+
+  listContent: {
+    paddingBottom: 16
   },
 
   empty: {
