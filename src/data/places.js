@@ -7,7 +7,7 @@ const places = [
     address: 'Praça Tavares Correia, Heliópolis, Garanhuns - PE',
     openingHours: 'Espaço público com visitação livre',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Garanhuns-rel%C3%B3gio-flores.jpg',
+    image: require('../../assets/imgs/relogio_flores.jpg'),
     coordinate: {
       latitude: -8.8815,
       longitude: -36.4767
@@ -25,7 +25,7 @@ const places = [
     address: 'Avenida Júlio Brasileiro, 363-425, Heliópolis, Garanhuns - PE',
     openingHours: 'Segunda a sexta: 05h às 21h | Sábado, domingo e feriados: 05h às 19h',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/3/34/Parque_Euclides_Dourado_%28Parque_dos_Eucaliptos%29_-_Garanhuns%2C_Pernambuco%2C_Brasil.jpg',
+    image: require('../../assets/imgs/parque_euclides_dourado.jpg'),
     coordinate: {
       latitude: -8.8835,
       longitude: -36.4845
@@ -43,7 +43,7 @@ const places = [
     address: 'Rua Manoel Clemente, Santo Antônio, Garanhuns - PE',
     openingHours: 'Diariamente: 08h às 17h',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Parque_Ruber_Van_Der_Linden_-_Garanhuns%2C_Pernambuco%2C_Brasil.jpg',
+    image: require('../../assets/imgs/parque_paupombo.jpg'),
     coordinate: {
       latitude: -8.8902,
       longitude: -36.4940
@@ -61,7 +61,7 @@ const places = [
     address: 'Rua Marcos Antônio de Andrade Costa Junior, Heliópolis, Garanhuns - PE',
     openingHours: 'Visitação conforme disponibilidade do espaço',
     admission: 'Consultar no local',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/2/21/BRUNO_LIMA_CASTELO_DE_JO%C3%83O_CAP%C3%83O_GARANHUNS_PE.jpg',
+    image: require('../../assets/imgs/castelo.jpg'),
     coordinate: {
       latitude: -8.8769,
       longitude: -36.4854
@@ -79,7 +79,7 @@ const places = [
     address: 'Avenida Afonso Pena, 85, Santo Antônio, Garanhuns - PE',
     openingHours: 'Conforme a programação cultural',
     admission: 'Entrada gratuita para a maioria dos eventos',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/4/49/Centro_Cultural_-_Garanhuns%2C_Pernambuco%2C_Brasil.jpg',
+    image: require('../../assets/imgs/centro_cultural.jpg'),
     coordinate: {
       latitude: -8.8910,
       longitude: -36.4930
@@ -97,7 +97,7 @@ const places = [
     address: 'Rua XV de Novembro, 219, Severiano Moraes Filho, Garanhuns - PE',
     openingHours: 'Segunda a sexta: 06h30 às 17h | Sábado: 06h30 às 12h',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/6/63/Santu%C3%A1rio_M%C3%A3e_Rainha_-_Garanhuns%2C_Pernambuco%2C_Brasil%281%29.jpg',
+    image: require('../../assets/imgs/mae_rainha.jpg'),
     coordinate: {
       latitude: -8.8770,
       longitude: -36.4870
@@ -115,7 +115,7 @@ const places = [
     address: 'Avenida Santo Antônio, 5, Santo Antônio, Garanhuns - PE',
     openingHours: 'Aberta durante os horários de celebração e visitação',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/1/13/Igreja_Matriz_de_Santo_Ant%C3%B4nio_-_Garanhuns%2C_Pernambuco%2C_Brasil.jpg',
+    image: require('../../assets/imgs/catedral_santo_antonio.jpg'),
     coordinate: {
       latitude: -8.8906,
       longitude: -36.4920
@@ -133,7 +133,7 @@ const places = [
     address: 'Alto do Magano, Magano, Garanhuns - PE',
     openingHours: 'Espaço público com visitação livre',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Cristo_do_Magano_-_Garanhuns%2C_Pernambuco%2C_Brasil.jpg',
+    image: require('../../assets/imgs/cristo_magano.jpg'),
     coordinate: {
       latitude: -8.8783,
       longitude: -36.5183
@@ -151,7 +151,7 @@ const places = [
     address: 'Avenida Rui Barbosa, 200, Heliópolis, Garanhuns - PE',
     openingHours: 'Visitação mediante agendamento | Capela aberta durante as celebrações',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Semin%C3%A1rio_S%C3%A3o_Jos%C3%A9_-_Garanhuns%2C_Pernambuco%2C_Brasil.jpg',
+    image: require('../../assets/imgs/seminario.jpg'),
     coordinate: {
       latitude: -8.8875,
       longitude: -36.4925
@@ -169,7 +169,7 @@ const places = [
     address: 'Praça Tiradentes, 23, Centro, Garanhuns - PE',
     openingHours: 'Aberto a visitantes | Recomenda-se contato prévio',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/9/96/WalberMoura_MosteiroSaoBento_Garanhuns_PE_%2840013199575%29.jpg',
+    image: require('../../assets/imgs/mosteiro.jpeg'),
     coordinate: {
       latitude: -8.8908,
       longitude: -36.4952
@@ -187,7 +187,7 @@ const places = [
     address: 'Avenida Santo Antônio, 126, Centro, Garanhuns - PE',
     openingHours: 'Segunda a sexta: 08h às 17h',
     admission: 'Visitação externa gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/b/b4/Garanhuns-Prefeitura-Pal%C3%A1cio-Celso-Galv%C3%A3o.jpg',
+    image: require('../../assets/imgs/prefeitura.jpg'),
     coordinate: {
       latitude: -8.8905,
       longitude: -36.4938
@@ -205,7 +205,7 @@ const places = [
     address: 'Praça Souto Filho, Heliópolis, Garanhuns - PE',
     openingHours: 'Espaço público com visitação livre',
     admission: 'Entrada gratuita',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Pra%C3%A7a_Dom_Moura_-_Garanhuns%2C_Pernambuco%2C_Brasil.jpg',
+    image: require('../../assets/imgs/praca_fonte.jpeg'),
     coordinate: {
       latitude: -8.8895,
       longitude: -36.4952
