@@ -12,7 +12,8 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 function resolveImageSource(image) {
   if (typeof image === 'string') return { uri: image };
-  return Image.resolveAssetSource(image);
+  if (typeof image === 'number') return Image.resolveAssetSource(image);
+  return image;
 }
 
 export default function PlaceCard({ place, onPress, isFavorite, onToggleFavorite }) {

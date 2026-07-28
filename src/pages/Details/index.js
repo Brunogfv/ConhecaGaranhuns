@@ -12,6 +12,12 @@ import {
 
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
+function resolveImageSource(image) {
+  if (typeof image === 'string') return { uri: image };
+  if (typeof image === 'number') return Image.resolveAssetSource(image);
+  return image;
+}
+
 import MapViewWrapper from '../../components/MapViewWrapper';
 import useFavorites from '../../hooks/useFavorites';
 
@@ -38,7 +44,7 @@ export default function Details({ route }) {
       showsVerticalScrollIndicator={false}
     >
       <Image
-        source={typeof place.image === 'string' ? { uri: place.image } : Image.resolveAssetSource(place.image)}
+        source={resolveImageSource(place.image)}
         style={styles.image}
         resizeMode="cover"
       />

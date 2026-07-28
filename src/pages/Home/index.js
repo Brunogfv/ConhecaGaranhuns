@@ -7,6 +7,7 @@ import React, {
 import {
   ActivityIndicator,
   FlatList,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -101,7 +102,12 @@ export default function Home({ navigation }) {
   }, [places, searchText, selectedCategory, showFavoritesOnly, favoriteIds]);
 
   function openDetails(place) {
-    navigation.navigate('Details', { place });
+    navigation.navigate('Details', {
+      place: {
+        ...place,
+        image: typeof place.image === 'string' ? place.image : Image.resolveAssetSource(place.image)
+      }
+    });
   }
 
   function renderPlace({ item }) {
@@ -237,7 +243,14 @@ export default function Home({ navigation }) {
         <MapViewWrapper
           places={filteredPlaces}
           region={defaultRegion}
-          onPlacePress={(place) => navigation.navigate('Details', { place })}
+          onPlacePress={(place) =>
+            navigation.navigate('Details', {
+              place: {
+                ...place,
+                image: typeof place.image === 'string' ? place.image : Image.resolveAssetSource(place.image)
+              }
+            })
+          }
           style={styles.map}
         />
       ) : (
