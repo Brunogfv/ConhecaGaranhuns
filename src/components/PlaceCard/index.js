@@ -10,6 +10,11 @@ import {
 
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
+function resolveImageSource(image) {
+  if (typeof image === 'string') return { uri: image };
+  return Image.resolveAssetSource(image);
+}
+
 export default function PlaceCard({ place, onPress, isFavorite, onToggleFavorite }) {
   return (
     <Pressable
@@ -20,7 +25,7 @@ export default function PlaceCard({ place, onPress, isFavorite, onToggleFavorite
       onPress={onPress}
     >
       <Image
-        source={typeof place.image === 'string' ? { uri: place.image } : place.image}
+        source={resolveImageSource(place.image)}
         style={styles.image}
         resizeMode="cover"
       />
