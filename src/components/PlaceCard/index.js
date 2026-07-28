@@ -8,6 +8,14 @@ import {
   View
 } from 'react-native';
 
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+
+function resolveImageSource(image) {
+  if (typeof image === 'string') return { uri: image };
+  if (typeof image === 'number') return Image.resolveAssetSource(image);
+  return image;
+}
+
 export default function PlaceCard({ place, onPress, isFavorite, onToggleFavorite }) {
   return (
     <Pressable
@@ -18,7 +26,7 @@ export default function PlaceCard({ place, onPress, isFavorite, onToggleFavorite
       onPress={onPress}
     >
       <Image
-        source={{ uri: place.image }}
+        source={resolveImageSource(place.image)}
         style={styles.image}
         resizeMode="cover"
       />
@@ -27,9 +35,11 @@ export default function PlaceCard({ place, onPress, isFavorite, onToggleFavorite
         style={styles.favoriteButton}
         onPress={() => onToggleFavorite?.(place.id)}
       >
-        <Text style={styles.favoriteIcon}>
-          {isFavorite ? '❤️' : '🤍'}
-        </Text>
+        <Ionicons
+          name={isFavorite ? 'heart' : 'heart-outline'}
+          size={20}
+          color={isFavorite ? '#c0392b' : '#555555'}
+        />
       </TouchableOpacity>
 
       <View style={styles.content}>
@@ -39,23 +49,24 @@ export default function PlaceCard({ place, onPress, isFavorite, onToggleFavorite
 
         <Text style={styles.name}>{place.name}</Text>
 
-        <Text style={styles.neighborhood}>
-          📍 {place.neighborhood}
-        </Text>
+        <View style={styles.infoRow}>
+          <Ionicons name="location-outline" size={13} color="#555555" />
+          <Text style={styles.neighborhood}>{place.neighborhood}</Text>
+        </View>
 
         <Text style={styles.summary} numberOfLines={3}>
           {place.summary}
         </Text>
 
         <View style={styles.admissionContainer}>
-          <Text style={styles.admissionText}>
-            🎟️ {place.admission}
-          </Text>
+          <MaterialCommunityIcons name="ticket-outline" size={14} color="#2d7a56" />
+          <Text style={styles.admissionText}>{place.admission}</Text>
         </View>
 
-        <Text style={styles.detailsText}>
-          Toque para ver os detalhes →
-        </Text>
+        <View style={styles.detailsRow}>
+          <Text style={styles.detailsText}>Toque para ver os detalhes</Text>
+          <Ionicons name="chevron-forward" size={14} color="#1a6b4a" />
+        </View>
       </View>
     </Pressable>
   );
@@ -69,10 +80,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     elevation: 5,
     shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.18,
     shadowRadius: 5,
     borderWidth: 1,
@@ -100,10 +108,6 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-
-  favoriteIcon: {
-    fontSize: 20
   },
 
   content: {
@@ -134,10 +138,16 @@ const styles = StyleSheet.create({
     marginBottom: 6
   },
 
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    marginBottom: 10
+  },
+
   neighborhood: {
     color: '#555555',
-    fontSize: 14,
-    marginBottom: 10
+    fontSize: 14
   },
 
   summary: {
@@ -147,6 +157,9 @@ const styles = StyleSheet.create({
   },
 
   admissionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
     marginTop: 10,
     backgroundColor: '#f0f7f3',
     borderRadius: 8,
@@ -161,10 +174,16 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   },
 
+  detailsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+    marginTop: 14
+  },
+
   detailsText: {
     color: '#1a6b4a',
     fontSize: 14,
-    fontWeight: 'bold',
-    marginTop: 14
+    fontWeight: 'bold'
   }
 });

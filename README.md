@@ -18,7 +18,7 @@ informações detalhadas sobre cada ponto.
 
 ## Funcionalidades
 
-- Listagem de 8 locais turísticos, culturais e naturais
+- Listagem de 25 locais turísticos, culturais, religiosos e naturais
 - Pesquisa por nome, categoria ou bairro
 - Filtro por categoria (chips)
 - Mapa interativo (lista/mapa toggle)
@@ -30,6 +30,8 @@ informações detalhadas sobre cada ponto.
 - Campo personalizado: informação sobre entrada/ingresso
 - Imagens reais via Wikimedia Commons
 - Endereços corrigidos com dados oficiais
+- Sistema de favoritos com persistência (AsyncStorage)
+- Compartilhamento do local (Share nativo)
 
 ## Tecnologias
 
@@ -37,6 +39,9 @@ informações detalhadas sobre cada ponto.
 - React Native
 - Expo
 - React Navigation
+- @expo/vector-icons (ícones)
+- react-native-maps (mapa)
+- AsyncStorage (persistência dos favoritos)
 
 ## Como executar
 
@@ -59,10 +64,15 @@ npx expo start
 ```
 src
 ├── components
-│   └── PlaceCard
-│       └── index.js
+│   ├── PlaceCard
+│   │   └── index.js
+│   └── MapViewWrapper
+│       ├── index.native.js
+│       └── index.web.js
 ├── data
 │   └── places.js
+├── hooks
+│   └── useFavorites.js
 └── pages
     ├── Home
     │   └── index.js
@@ -72,10 +82,10 @@ src
 
 ## Personalizações realizadas
 
-- 8 locais cadastrados (2 a mais que o modelo base)
+- 25 locais cadastrados (muito acima do mínimo de 8), pesquisados em fontes reais (Prefeitura de Garanhuns, Wikipédia, GuiaGaranhuns)
 - Novo campo `admission` (entrada/ingresso) nos objetos e na tela de detalhes
 - Cores personalizadas: verde `#1a6b4a` e verde claro `#e8f5ee`
 - Título com tamanho 30 (personalizado)
 - Cartões com borda, sombra e bordas arredondadas de 16px
-- Texto introdutório: "Descubra os encantos turísticos, culturais e naturais da Suíça Pernambucana"
-- Ícones emoji nos campos de informação
+- Texto introdutório apresentado em um modal de boas-vindas na primeira abertura (persistido com AsyncStorage)
+- Ícones vetoriais (@expo/vector-icons) nos campos de informação e ações
